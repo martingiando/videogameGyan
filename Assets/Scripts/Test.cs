@@ -12,7 +12,8 @@ public class Test : MonoBehaviour
   // bool = variable booleana
   // Debug.Log imprime en consola
 
-  public int vida;
+  public float vida;
+  public bool dead = false;
   public float baseSpeed = 0.01f;
   public int playerSpeed;
   public Vector3 pos;
@@ -20,7 +21,7 @@ public class Test : MonoBehaviour
   public int rotate = 1;
   void Start()
   {
-    vida = 100;
+    vida = 100f;
     playerSpeed = 10;
 
     transform.localScale += new Vector3(0.3f, 0.3f, 0.3f);
@@ -29,8 +30,6 @@ public class Test : MonoBehaviour
   // Update is called once per frame mientras más FPS más veces se llama a Update
   void Update()
   {
-    Debug.Log(transform.position.z);
-    Debug.Log(direction);
     transform.Rotate(0, rotate, 0);
     if (transform.position.y < 4)
     {
@@ -55,6 +54,39 @@ public class Test : MonoBehaviour
     if (direction == 'R')
     {
       transform.Translate(0, baseSpeed * playerSpeed, 0);
+    }
+
+    if (dead == false)
+    {
+      Debug.Log(dead);
+      Damage();
+    }
+
+    if (dead == true)
+    {
+      Debug.Log(dead);
+      Health();
+    }
+
+    Debug.Log(vida);
+
+  }
+
+  void Damage()
+  {
+    vida = vida - (1 * Time.deltaTime);
+    if (vida <= 0)
+    {
+      dead = true;
+    }
+  }
+
+  void Health()
+  {
+    vida = vida + (1 * Time.deltaTime);
+    if (vida >= 100)
+    {
+      dead = false;
     }
   }
 }
